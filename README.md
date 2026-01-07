@@ -95,6 +95,7 @@ SYSTEM_INSTRUCTION="Tu es Jarvis, une assistante..."
 - [x] Gestion de l'interruption (Local VAD & Server Signal)
 
 ### Phase 2: L'Oreille (Hardware & Speaker ID) [À VENIR]
+- [ ] Support d'un wakeword personalisé (https://colab.research.google.com/drive/1q1oe2zOyZp7UsB3jJiQ1IFn8z5YfjwEb?usp=sharing#scrollTo=1cbqBebHXjFD)
 - [ ] Support des clients ESP32 (Hardware)
 - [ ] Module **Speaker Identification** (Savoir QUI parle)
 - [ ] Gestion multi-room
