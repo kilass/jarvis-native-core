@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     GOOGLE_API_KEY: str
     
     # LLM & TTS Config
-    GEMINI_MODEL_ID: str = "gemini-2.5-pro"
-    TTS_VOICE_NAME: str = "fr-FR-Neural2-C"
+    GEMINI_MODEL_ID: str = "gemini-2.0-flash-exp"
+    TTS_VOICE_NAME: str = "fr-FR-Chirp3-HD-Zephyr"
     SYSTEM_INSTRUCTION: str = "Tu es Jarvis, une assistante domotique. Tu réponds de manière brève, précise et chaleureuse."
     HOST: str = "0.0.0.0"
     PORT: int = 8000

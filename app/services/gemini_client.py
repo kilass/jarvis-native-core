@@ -13,20 +13,18 @@ class GeminiClient:
         self.project_id = settings.PROJECT_ID
         self.location = settings.LOCATION
         
-        # Initialize the client
-        # Note: Adjusting for specific SDK version usage. 
-        # Assuming google-genai 0.2+ structure.
+        # Reverting to v1alpha for experimental model stability (gemini-2.0-flash-exp)
         self.client = genai.Client(
             api_key=self.api_key, 
-            http_options={"api_version": "v1beta"}
+            http_options={"api_version": "v1alpha"}
         )
-        # Using the model configured in settings
+        # Using the model configured in settings (Recommending gemini-2.0-flash)
         self.model_id = settings.GEMINI_MODEL_ID
         
-        # Live config
+        # Live config with Google Search Tool enabled
         self.config = {
+            "tools": [{"google_search": {}}],
             "response_modalities": ["TEXT"],
-            # Prompt optimisé pour le texte conversationnel
             "system_instruction": settings.SYSTEM_INSTRUCTION
         }
 
