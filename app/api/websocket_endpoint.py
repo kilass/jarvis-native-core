@@ -139,17 +139,17 @@ async def audio_websocket(websocket: WebSocket):
                                             last_wake_time = now
                                             
                                             if not is_awake:
-                                                logger.info(f"✨ REVEIL: {mdl_name} (Score: {score:.3f})")
+                                                logger.info(f"✨ WAKE WORD DETECTED: {mdl_name} (Score: {score:.3f})")
                                                 is_awake = True
                                             else:
                                                 # WAKE WORD INTERRUPTION -> SLEEP
-                                                logger.info(f"🔄 INTERRUPTION (Wake Word) -> SLEEPING (Score: {score:.3f})")
+                                                logger.info(f"🔄 WAKE WORD INTERRUPTION -> SLEEPING (Score: {score:.3f})")
                                                 interrupt_event.set()
                                                 # Go back to sleep immediately
                                                 is_awake = False
                                     elif score > 0.1:
-                                        # Low confidence logging as requested
-                                        logger.debug(f"🔍 Low Confidence: {mdl_name} (Score: {score:.3f})")
+                                        # Low confidence logging as requested in test script style
+                                        logger.info(f"🔍 Low Confidence: {mdl_name} (Score: {score:.3f})")
                                 
                                 # GATEKEEPER: Only send to Gemini if Awake
                                 if is_awake:

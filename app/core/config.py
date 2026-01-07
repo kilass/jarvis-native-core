@@ -6,7 +6,8 @@ class Settings(BaseSettings):
     LOCATION: str = "europe-west9" # Updated to Paris
     GOOGLE_API_KEY: str
     
-    # TTS & Prompt Config
+    # LLM & TTS Config
+    GEMINI_MODEL_ID: str = "gemini-2.5-pro"
     TTS_VOICE_NAME: str = "fr-FR-Neural2-C"
     SYSTEM_INSTRUCTION: str = "Tu es Jarvis, une assistante domotique. Tu réponds de manière brève, précise et chaleureuse."
     HOST: str = "0.0.0.0"

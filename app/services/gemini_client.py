@@ -18,10 +18,10 @@ class GeminiClient:
         # Assuming google-genai 0.2+ structure.
         self.client = genai.Client(
             api_key=self.api_key, 
-            http_options={"api_version": "v1alpha"}
+            http_options={"api_version": "v1beta"}
         )
-        # Using the experimental 2.0 Flash model which supports Live API
-        self.model_id = "gemini-2.0-flash-exp" 
+        # Using the model configured in settings
+        self.model_id = settings.GEMINI_MODEL_ID
         
         # Live config
         self.config = {
