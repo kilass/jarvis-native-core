@@ -8,7 +8,7 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 INPUT_RATE = 16000  # Standard for consistent mic capture
 OUTPUT_RATE = 24000 # High quality for Gemini Aoede voice
-CHUNK = 1024
+CHUNK = 1280
 
 async def microphone_client():
     uri = "ws://localhost:8000/ws/audio"
@@ -56,45 +56,9 @@ async def microphone_client():
             audio_queue = asyncio.Queue()
 
             async def send_audio():
-                import struct
-                import math
-                import os
-                from dotenv import load_dotenv
-                
-                load_dotenv() # Load .env file
-                
-                # Parameters for VAD
-                try:
-                    RMS_THRESHOLD = int(os.getenv("VAD_RMS_THRESHOLD", 1000))
-                except ValueError:
-                    RMS_THRESHOLD = 1000
-                
-                print(f"[VAD] Listening for interruption (Threshold: {RMS_THRESHOLD})...");
-
                 try:
                     while True:
                         data = await asyncio.to_thread(input_stream.read, CHUNK, exception_on_overflow=False)
-                        
-                        # Calculate Volume (RMS) manually to avoid audioop deprecation warning
-                        count = len(data) // 2
-                        if count > 0:
-                            shorts = struct.unpack(f"{count}h", data)
-                            sum_squares = sum(s**2 for s in shorts)
-                            rms = math.sqrt(sum_squares / count)
-                        else:
-                            rms = 0
-                        
-                        # Simple "Barge-in" detection
-                        # Only interrupt if volume is loud enough AND we are currently playing audio (optional)
-                        # For now, just loud enough.
-                        if rms > RMS_THRESHOLD:
-                            # Send interrupt signal if we haven't sent one recently (debounce)
-                            import time
-                            if time.time() - last_interrupt_time > 1.0:
-                                print(f"\n[VAD] User Speaking (RMS: {rms}) - SENT INTERRUPTION", flush=True)
-                                await websocket.send('{"type": "interrupt"}')
-                                last_interrupt_time = time.time()
-                        
                         await websocket.send(data)
                         await asyncio.sleep(0.01) # Yield control
                 except Exception as e:
